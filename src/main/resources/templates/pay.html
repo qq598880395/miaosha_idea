@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>登录</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <!--th为thymeleaf特有引入的方式-->
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+    
+</head>
+<body>
+
+<div name="loginForm" id="loginForm"   style="width:50%; margin:0 auto">
+
+	<h2 style="text-align:center; margin-bottom: 20px">订单支付</h2>
+	
+	<div class="form-group">
+       	<div class="row">
+	       	<img class="col-md-4" th:src="@{/img/wechat.JPG}" width="400" height="400">
+	        <div class="col-md-5">
+	    	</div>
+	    	<div class="col-md-1">
+	    	</div>
+    	</div>
+    </div>
+    
+
+	<div class="row">
+		     	<div class="col-md-5">
+	       	 		<button class="btn btn-primary btn-block" type="regist" onclick="javascript:history.back(-1)">取消</button>
+	       	 	</div>
+	       	 	<div class="col-md-5">
+	       	 		<button class="btn btn-primary btn-block" type="submit" onclick="pay()">支付完成</button>
+	       	 	</div>
+	 </div>
+	<input type="hidden" id="id" th:value="${id}" />
+</div>
+</body>
+<script>
+function pay(){
+	$("#loginForm").validate({
+        submitHandler:function(form){
+             doPay();
+        }    
+    });
+}
+function doPay(){
+	g_showLoading();
+	var id = $("#id").val();
+	$.ajax({
+		url: "/do_miaosha/pay",
+	    type: "POST",
+	    data:{
+	    	id:id
+	    },
+	    success:function(data){
+	    	layer.closeAll();
+
+	    	if(data.code == 0){
+	    		layer.msg("成功");
+	    		window.location.href="/login/index";
+	    	}else{
+	    		layer.msg(data.msg);
+	    	}
+	    },
+	    error:function(){
+	    	layer.closeAll();
+	    }
+	});
+}
+</script>
+</html>

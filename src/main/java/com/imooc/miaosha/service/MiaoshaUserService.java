@@ -56,6 +56,27 @@ public class MiaoshaUserService {
         return true;
     }
 
+    public boolean regist(HttpServletResponse response,LoginVo loginVo){
+        if(loginVo ==null){
+            throw new GlobalException(CodeMsg.SERVER_ERROR);
+        }
+        String mobile=loginVo.getMobile();
+        long tel = Long.parseLong(mobile);
+        String fromPass=loginVo.getPassword();
+        MiaoshaUser user = getById(Long.parseLong(mobile));       //判断手机号是否存在
+        if(user!=null){
+            throw new GlobalException( CodeMsg.MOBILE_EXIST);
+        }
+        String salt = "1a2b3c4d";
+        String dbPass = MD5Util.formPassToDbPass(fromPass,salt);
+        MiaoshaUser newUser = new MiaoshaUser();
+        newUser.setId(tel);
+        newUser.setNickname(mobile);
+        newUser.setPassword(dbPass);
+        newUser.setSalt(salt);
+        miaoshaUserDao.addUser(newUser);
+        return true;
+    }
     private void addCookie(HttpServletResponse response,String token ,MiaoshaUser user ){
 
         redisService.set(MiaoshaUserKey.token,token,user);

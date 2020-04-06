@@ -44,6 +44,16 @@ public class GoodsController {
 
         return "goods_list";
     }
+    @RequestMapping("/to_orderList")
+    public String toOrderList(Model model, MiaoshaUser user) {
+        model.addAttribute("user",user);
+        List<GoodsVo> goodsList=goodsService.listGoodsVo();
+        model.addAttribute("goodsList",goodsList);
+
+
+        return "goods_list";
+    }
+
     @RequestMapping("/to_detail/{goodsId}")
     public String detail(Model model, MiaoshaUser user, @PathVariable("goodsId")long goodsId) {//@pathvariable用来获取路径中的{goodsId}参数
         model.addAttribute("user",user);
@@ -69,6 +79,7 @@ public class GoodsController {
         model.addAttribute("remainSeconds",remainSeconds);
         return "goods_detail";
     }
+
 
 
 

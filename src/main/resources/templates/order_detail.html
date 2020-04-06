@@ -49,7 +49,10 @@
         	<span th:if="${orderInfo.status eq 5}">已完成</span>
         </td>  
         <td>
-        	<button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
+        	<a th:href="'/miaosha/to_pay/'+${orderInfo.id}" onclick="javascript:window.open(this.href)">
+                <button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
+            </a>
+
         </td>
      </tr>
       <tr>

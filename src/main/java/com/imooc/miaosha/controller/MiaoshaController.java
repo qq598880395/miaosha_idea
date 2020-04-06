@@ -6,11 +6,13 @@ import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.domain.OrderInfo;
 import com.imooc.miaosha.redis.RedisService;
 import com.imooc.miaosha.result.CodeMsg;
+import com.imooc.miaosha.result.Result;
 import com.imooc.miaosha.service.GoodsService;
 import com.imooc.miaosha.service.MiaoshaService;
 import com.imooc.miaosha.service.MiaoshaUserService;
 import com.imooc.miaosha.service.OrderService;
 import com.imooc.miaosha.vo.GoodsVo;
+import com.imooc.miaosha.vo.LoginVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -65,7 +69,17 @@ public class MiaoshaController {
         return "order_detail";
     }
 
+    @RequestMapping("/to_pay")
+    public String toPay(Model model, MiaoshaUser user,@PathVariable("id")int id) {
+        model.addAttribute("user",user);
+        model.addAttribute("id", id);//订单id
+        return "pay";
+    }
 
-
+    @RequestMapping("/pay")
+    public Result<Boolean> pay(HttpServletResponse response, @Valid int id) {
+        orderService.paySeccess(response,id);//订单id
+        return Result.success(true);
+    }
 
 }

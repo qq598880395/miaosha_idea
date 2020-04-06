@@ -41,6 +41,29 @@ public class LoginController {
         return "login";
     }
 
+    @RequestMapping("/index")
+
+    public String index(Model model,User user) {
+        model.addAttribute("user",user);
+        return "index";
+    }
+
+    @RequestMapping("/to_regist")
+
+    public String toRegist() {
+        return "regist";
+    }
+
+    @RequestMapping("/do_regist")
+    @ResponseBody
+    public Result<Boolean> doRegist(HttpServletResponse response, @Valid LoginVo loginVo) {
+        log.info(loginVo.toString());
+        //注册
+        userService.regist(response,loginVo);
+        return Result.success(true);
+
+    }
+
     @RequestMapping("/do_login")
     @ResponseBody
     public Result<Boolean> doLogin(HttpServletResponse response, @Valid LoginVo loginVo) {

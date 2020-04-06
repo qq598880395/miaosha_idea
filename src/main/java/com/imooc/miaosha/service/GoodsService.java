@@ -29,4 +29,5 @@ public class GoodsService {
         g.setGoodsId(goods.getId());
         goodsDao.reduceStock(g);
     }
+
 }
