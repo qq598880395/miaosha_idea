@@ -17,9 +17,7 @@ public class CodeMsg {
 	public static CodeMsg PASSWORD_ERROR= new CodeMsg(500215, "密码错误");
 	public static CodeMsg MOBILE_EXIST= new CodeMsg(500216, "用户已存在");
 	//商品模块 5003XX
-	
 	//订单模块 5004XX
-	
 	//秒杀模块 5005XX
 	public static CodeMsg MIAO_SHA_OVER= new CodeMsg(500500, "秒杀已经秒杀完毕");
 	public static CodeMsg REPEATE_MIAOSHA= new CodeMsg(500501, "不能重复秒杀");
@@ -27,7 +25,6 @@ public class CodeMsg {
 		this.code = code;
 		this.msg = msg;
 	}
-
 
 	public CodeMsg fillArgs(Object... args){
 		int code = this.code;

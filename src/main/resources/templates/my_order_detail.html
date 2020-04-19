@@ -21,10 +21,10 @@
 <body>
 
 <div class="panel panel-default">
-  <div class="panel-heading">秒杀商品详情</div>
+  <div class="panel-heading">订单详情</div>
   <div class="panel-body">
   	<span th:if="${user eq null}"> 您还没有登录，请登陆后再操作<br/></span>
-  	<span>您尚未记载收货地址</span>
+  	<span>北京市昌平区回龙观龙博一区</span>
   </div>
   <table class="table" id="goodslist">
   	<tr>  
@@ -39,63 +39,22 @@
           <td>商品详情</td>
           <td colspan="3" th:text="${goods.goodsDetail}"></td>
       </tr>
-     <tr>
-        <td>秒杀开始时间</td>
-        <td th:text="${#dates.format(goods.startDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
-        <td id="miaoshaTip">
-        	<input type="hidden" id="remainSeconds" th:value="${remainSeconds}" />
-        	<span th:if="${miaoshaStatus eq 0}">秒杀倒计时：<span id="countDown" th:text="${remainSeconds}"></span>秒</span>
-        	<span th:if="${miaoshaStatus eq 1}">秒杀进行中</span>
-        	<span th:if="${miaoshaStatus eq 2}">秒杀已结束</span>
-        </td>
-        <td>
-        	<form id="miaoshaForm" method="post" action="/miaosha/do_miaosha">
-        		<button class="btn btn-primary btn-block" type="submit" id="buyButton">立即秒杀</button>
-        		<input type="hidden" name="goodsId" th:value="${goods.id}" />
-        	</form>
-        </td>
-     </tr>
      <tr>  
         <td>商品原价</td>  
         <td colspan="3" th:text="${goods.goodsPrice}"></td>  
      </tr>
       <tr>  
-        <td>秒杀价</td>  
-        <td colspan="3" th:text="${goods.miaoshaPrice}"></td>
+        <td>交易价格</td>
+        <td colspan="3" th:text="${goods.miaoshaPrice}"></td>  
      </tr>
      <tr>  
-        <td>库存数量</td>  
-        <td colspan="3" th:text="${goods.stockCount}"></td>  
+        <td>购买数量</td>
+        <td colspan="3" th:text="${orderInfo.goodsCount}"></td>
      </tr>
   </table>
 </div>
 </body>
 <script>
-$(function(){
-	countDown();
-});
-
-function countDown(){
-	var remainSeconds = $("#remainSeconds").val();
-	var timeout;
-	if(remainSeconds > 0){//秒杀还没开始，倒计时
-		$("#buyButton").attr("disabled", true);
-		timeout = setTimeout(function(){
-			$("#countDown").text(remainSeconds - 1);
-			$("#remainSeconds").val(remainSeconds - 1);
-			countDown();
-		},1000);
-	}else if(remainSeconds == 0){//秒杀进行中
-		$("#buyButton").attr("disabled", false);
-		if(timeout){
-			clearTimeout(timeout);
-		}
-		$("#miaoshaTip").html("秒杀进行中");
-	}else{//秒杀已经结束
-		$("#buyButton").attr("disabled", true);
-		$("#miaoshaTip").html("秒杀已经结束");
-	}
-}
 
 </script>
 </html>

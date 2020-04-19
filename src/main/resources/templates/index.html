@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/base.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/css/swiper-3.4.2.min.css}">
-    <script type="text/javascript" th:src="@{/js/swiper-3.4.2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/swiper-3.4.2.min.js}" ></script>
 </head>
 
 <body>
@@ -77,11 +77,12 @@
                         <div class="drop_down"><!--下拉菜单的大盒子-->
                         <div class="delta"></div><!--三角形-->
                         <ul class="login_nav clearfix"><!--下拉菜单-->
-                            <li th:if="${user eq null}"><a th:href="/login/do_login" >会员登录</a></li>
-                            <li th:if="${user eq null}"><a th:href="/login/do_regist">会员注册</a></li>
-                            <li th:if="${user ne null}"><a href="">我的喜好</a></li>
+                            <!--<li th:if="${user eq null}"><a th:href="/login/do_login" >会员登录</a></li>-->
+                            <!--<li th:if="${user eq null}"><a th:href="/login/do_regist">会员注册</a></li>-->
+
+                            <li th:text="${user.name}"></li>
                             <li th:if="${user ne null}"><a href="">我的地址</a></li>
-                            <li><a href="">我的订单</a></li>
+                            <li><a href="/goods/to_orderList">我的订单</a></li>
                             <li><a href="">M码通道</a></li>
                         </ul>
                         </div>

@@ -52,7 +52,6 @@ public class MiaoshaUserService {
         //生成cookie
         String token = UUIDUtil.uuid();
         addCookie(response,token,user);
-
         return true;
     }
 

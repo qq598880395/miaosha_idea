@@ -12,6 +12,7 @@ public interface MiaoshaUserDao {
     @Select("select * from miaosha_user where id= #{id}")
     public MiaoshaUser getById(@Param("id") long id);
 
-    @Insert("insert into miaosha_user (id,nickname,password,salt)values(#{id},#{nickname},#{password},#{salt})")
+    @Insert("insert into miaosha_user " +
+            "(id,nickname,password,salt)values(#{id},#{nickname},#{password},#{salt})")
     public int addUser(MiaoshaUser miaoshaUser );
 }

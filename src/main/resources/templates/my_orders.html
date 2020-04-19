@@ -21,16 +21,24 @@
 <body>
 
 <div class="panel panel-default">
-    <div class="panel-heading">秒杀商品列表</div>
+    <div class="panel-heading">我的订单</div>
     <table class="table" id="goodslist">
-        <tr><td>商品名称</td><td>商品图片</td><td>商品原价</td><td>秒杀价</td><td>库存数量</td><td>详情</td></tr>
-        <tr  th:each="goods,goodsStat : ${goodsList}">
+        <tr><td>商品名称</td><td>交易价格</td><td>购买数量</td><td>下单时间</td><td>订单状态</td><td>详情</td></tr>
+        <tr  th:each="goods,goodsStat : ${orderList}">
             <td th:text="${goods.goodsName}"></td>
-            <td ><img th:src="@{${goods.goodsImg}}" width="100" height="100" /></td>
             <td th:text="${goods.goodsPrice}"></td>
-            <td th:text="${goods.miaoshaPrice}"></td>
-            <td th:text="${goods.stockCount}"></td>
-            <td><a th:href="'/goods_detail.htm?goodsId'+${goods.id}">详情</a></td>
+            <td th:text="${goods.goodsCount}"></td>
+            <td th:text="${#dates.format(goods.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td >
+                <span th:if="${goods.status eq 0}">未支付</span>
+                <span th:if="${goods.status eq 1}">待发货</span>
+                <span th:if="${goods.status eq 2}">已发货</span>
+                <span th:if="${goods.status eq 3}">已收货</span>
+                <span th:if="${goods.status eq 4}">已退款</span>
+                <span th:if="${goods.status eq 5}">已完成</span>
+            </td>
+            <td><a th:href="'/goods/my_order_detail/'+${goods.id}">详情</a></td>
+
         </tr>
     </table>
 </div>

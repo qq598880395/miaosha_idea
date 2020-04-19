@@ -45,8 +45,11 @@ public class OrderService {
         return orderInfo;
     }
 
-    public boolean paySeccess(HttpServletResponse response, int id) {
-
+    public boolean paySeccess(int id) {
+        orderDao.paySeccess(id);
         return true;
+    }
+    public OrderInfo myOrderDetail(int id){
+        return orderDao.getMyOrderDetailByOrderId(id);
     }
 }

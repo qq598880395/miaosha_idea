@@ -34,6 +34,10 @@
         <td>订单价格</td>  
         <td colspan="2" th:text="${orderInfo.goodsPrice}"></td>  
      </tr>
+      <tr>
+          <td>商品详情</td>
+          <td colspan="3" th:text="${goods.goodsDetail}"></td>
+      </tr>
      <tr>
      		<td>下单时间</td>  
         	<td th:text="${#dates.format(orderInfo.createDate, 'yyyy-MM-dd HH:mm:ss')}" colspan="2"></td>  
@@ -49,7 +53,7 @@
         	<span th:if="${orderInfo.status eq 5}">已完成</span>
         </td>  
         <td>
-        	<a th:href="'/miaosha/to_pay/'+${orderInfo.id}" onclick="javascript:window.open(this.href)">
+        	<a th:href="'/goods/paySeccess/'+${orderInfo.id}" onclick="javascript:window.open(this.href)">
                 <button class="btn btn-primary btn-block" type="submit" id="payButton">立即支付</button>
             </a>
 
