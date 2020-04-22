@@ -78,10 +78,11 @@ public class GoodsController {
     }
 
     @RequestMapping("/paySeccess/{id}")
-    public String paySeccess(Model model,MiaoshaUser user,@PathVariable("id")int id){
+    @ResponseBody
+    public Result paySeccess(Model model,MiaoshaUser user,@PathVariable("id")int id){
         model.addAttribute("user",user);
         orderService.paySeccess(id);
-        return "index";
+        return Result.success(true);
     }
 
     @RequestMapping("/my_order_detail/{id}")
@@ -98,11 +99,9 @@ public class GoodsController {
     }
     @RequestMapping(value = "/to_detail2/{goodsId}",produces="text/html")
     @ResponseBody
-    public String detail2(HttpServletRequest request, HttpServletResponse response,
-                         Model model, MiaoshaUser user,
+    public String detail2(HttpServletRequest request, HttpServletResponse response, Model model, MiaoshaUser user,
                          @PathVariable("goodsId")long goodsId) {//@pathvariable用来获取路径中的{goodsId}参数
         model.addAttribute("user", user);
-
         //取缓存
         String html = redisService.get(GoodsKey.getGoodsDetail, "", String.class);
         if(!StringUtils.isEmpty(html)) {
@@ -128,8 +127,6 @@ public class GoodsController {
         }
         model.addAttribute("miaoshaStatus",miaoshaStatus);
         model.addAttribute("remainSeconds",remainSeconds);
-//        return "goods_detail";
-
         IWebContext ctx =new WebContext(request,response,
                 request.getServletContext(),request.getLocale(),model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process("goods_detail", ctx);

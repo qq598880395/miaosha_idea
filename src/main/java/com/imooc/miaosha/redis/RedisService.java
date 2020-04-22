@@ -64,7 +64,6 @@ public class RedisService {
             //生成真正的key
             String realKey = prefix.getPrefix()+ key;
             return jedis.exists(realKey);
-
         }finally {
             returnToPool(jedis);
         }
@@ -79,7 +78,6 @@ public class RedisService {
             //生成真正的key
             String realKey = prefix.getPrefix()+ key;
             return jedis.incr(realKey);
-
         }finally {
             returnToPool(jedis);
         }

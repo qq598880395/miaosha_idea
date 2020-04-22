@@ -6,6 +6,7 @@ import com.imooc.miaosha.dao.OrderDao;
 import com.imooc.miaosha.domain.MiaoshaOrder;
 import com.imooc.miaosha.domain.MiaoshaUser;
 import com.imooc.miaosha.domain.OrderInfo;
+import com.imooc.miaosha.redis.RedisService;
 import com.imooc.miaosha.vo.GoodsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,8 @@ import java.util.List;
 public class OrderService {
     @Autowired
     OrderDao orderDao;
-
+    @Autowired
+    RedisService redisService;
 
     public MiaoshaOrder getMiaoshaOrderByUserIdGoodsId(Long userId, long goodsId) {
         return orderDao.getMiaoshaOrderByUserIdGoodsId(userId,goodsId);
@@ -44,7 +46,9 @@ public class OrderService {
         orderDao.insertMiaoshaOrder(miaoshaOrder);
         return orderInfo;
     }
-
+    public OrderInfo getOrderById(long orderId) {
+        return orderDao.getOrderById(orderId);
+    }
     public boolean paySeccess(int id) {
         orderDao.paySeccess(id);
         return true;

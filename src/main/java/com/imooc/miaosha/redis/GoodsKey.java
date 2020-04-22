@@ -1,7 +1,6 @@
 package com.imooc.miaosha.redis;
 
 public class GoodsKey extends BasePrefix{
-
 	private GoodsKey(int expireSeconds, String prefix) {
 		super(expireSeconds, prefix);
 	}

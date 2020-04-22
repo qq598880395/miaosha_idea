@@ -23,8 +23,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">秒杀商品详情</div>
   <div class="panel-body">
-  	<span id="userTip"> 您还没有登录，请登陆后再操作<br/></span>
-  	<span>没有收货地址的提示。。。</span>
+  	<!--<span id="userTip"> 您还没有登录，请登陆后再操作<br/></span>-->
+  	<span>您尚未记载任何收货地址</span>
   </div>
   <table class="table" id="goodslist">
   	<tr>  
@@ -87,7 +87,7 @@ function doMiaosha(){
 			layer.msg("客户端请求有误");
 		}
 	});
-	
+
 }
 
 function render(detail){
@@ -95,7 +95,7 @@ function render(detail){
 	var  remainSeconds = detail.remainSeconds;
 	var goods = detail.goods;
 	var user = detail.user;
-	if(user){
+	if(user==null){
 		$("#userTip").hide();
 	}
 	$("#goodsName").text(goods.goodsName);
@@ -108,14 +108,30 @@ function render(detail){
 	$("#stockCount").text(goods.stockCount);
 	countDown();
 }
-
+Date.prototype.format = function (format) {
+    var args = {
+        "M+": this.getMonth() + 1,
+        "d+": this.getDate(),
+        "h+": this.getHours(),
+        "m+": this.getMinutes(),
+        "s+": this.getSeconds(),
+    };
+    if (/(y+)/.test(format))
+        format = format.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var i in args) {
+        var n = args[i];
+        if (new RegExp("(" + i + ")").test(format))
+            format = format.replace(RegExp.$1, RegExp.$1.length == 1 ? n : ("00" + n).substr(("" + n).length));
+    }
+    return format;
+};
 $(function(){
 	//countDown();
 	getDetail();
 });
 
 function getDetail(){
-	var goodsId = g_getQueryString("goodsId");
+	var goodsId = getQueryStr("goodsId");
 	$.ajax({
 		url:"/goods/detail/"+goodsId,
 		type:"GET",
@@ -155,5 +171,14 @@ function countDown(){
 	}
 }
 
+var LocString = String(window.document.location.href);
+function getQueryStr(str) {
+    var rs = new RegExp("(^|)" + str + "=([^&]*)(&|$)", "gi").exec(LocString), tmp;
+    if (tmp = rs) {
+        return tmp[2];
+    }
+// parameter cannot be found
+    return "";
+}
 </script>
 </html>
